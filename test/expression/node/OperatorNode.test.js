@@ -724,4 +724,14 @@ describe('OperatorNode', function() {
     assert.equal(h.toTex({implicit: 'hide'}), '2~\\left(3+4\\right)');
     assert.equal(h.toTex({implicit: 'show'}), '2\\cdot\\left(3+4\\right)');
   });
+
+  it ('should stringify implicit multiplications between ConstantNodes with parentheses', function () {
+    var a = math.parse('(4)(4)(4)(4)');
+    var b = math.parse('4b(4)(4)');
+    var c = math.parse('(4(4(4)))');
+
+    assert.equal(a.toString({implicit: 'hide', parenthesis: 'auto'}), '(4) (4) (4) (4)');
+    assert.equal(b.toString({implicit: 'hide', parenthesis: 'auto'}), '4 b(4)(4)');
+    assert.equal(c.toString({implicit: 'hide', parenthesis: 'auto'}), '4 (4 (4))');
+  });
 });
